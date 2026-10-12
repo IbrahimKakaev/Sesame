@@ -1,0 +1,20 @@
+# Plan de formation 2026
+Diffusion : service RH
+
+Le plan de formation 2026 a été construit par le service des ressources humaines à partir des entretiens professionnels de l'automne 2025.
+
+Droits de chaque salarié. Chaque salarié dispose d'un budget individuel de formation de 1 800 euros par an et d'au moins trois jours de formation. Les jours non utilisés ne se reportent pas sur l'année suivante.
+
+Axes prioritaires. Trois axes sont prioritaires en 2026 : la cybersécurité des systèmes embarqués, le langage Rust pour l'embarqué, et le management de proximité pour les nouveaux responsables d'équipe.
+
+Certifications. L'entreprise finance une certification par salarié tous les deux ans, frais d'examen compris. En cas d'échec, le second passage reste à la charge de l'entreprise ; le troisième est à la charge du salarié.
+=== page ===
+Calendrier des demandes. Les demandes de formation se déposent auprès du service RH avant le 31 janvier. Les réponses sont données avant le 28 février. Une demande hors calendrier reste possible si elle répond à un besoin de projet.
+
+Formations internes. Un vendredi après-midi par mois est réservé aux ateliers internes, animés par des salariés volontaires. Les animateurs reçoivent une prime de 150 euros par atelier.
+
+Formations obligatoires. La sensibilisation à la sécurité informatique est obligatoire chaque année pour tous. La formation de sauveteur secouriste du travail est proposée à deux salariés par étage.
+
+Départ après une formation longue. Pour une formation de plus de 5 000 euros, une clause de dédit-formation de douze mois est signée avant l'inscription.
+
+Bilan. Le bilan du plan est présenté au comité social et économique en décembre.

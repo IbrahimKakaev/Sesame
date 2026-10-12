@@ -1,0 +1,22 @@
+{
+  "motDePasse": "demo-sesame-2026",
+  "groupes": ["RH", "Finance", "Direction"],
+  "comptes": [
+    { "email": "lea.martin@helianthe.example", "nom": "Léa Martin", "role": "LECTEUR", "groupes": [] },
+    { "email": "karim.benali@helianthe.example", "nom": "Karim Benali", "role": "CONTRIBUTEUR", "groupes": ["RH"] },
+    { "email": "ines.roux@helianthe.example", "nom": "Inès Roux", "role": "CONTRIBUTEUR", "groupes": ["Finance"] },
+    { "email": "hugo.lefevre@helianthe.example", "nom": "Hugo Lefèvre", "role": "ADMINISTRATEUR", "groupes": ["Direction"] }
+  ],
+  "documents": [
+    { "fichier": "01-guide-accueil.pdf", "titre": "Guide d'accueil des nouveaux salariés", "groupes": ["Tous"] },
+    { "fichier": "02-charte-informatique.pdf", "titre": "Charte informatique", "groupes": ["Tous"] },
+    { "fichier": "03-politique-teletravail.pdf", "titre": "Politique de télétravail", "groupes": ["RH"] },
+    { "fichier": "04-grille-salariale.pdf", "titre": "Grille salariale 2026", "groupes": ["RH"] },
+    { "fichier": "05-budget-previsionnel.pdf", "titre": "Budget prévisionnel 2027", "groupes": ["Finance"] },
+    { "fichier": "06-compte-rendu-codir.pdf", "titre": "Compte rendu du comité de direction du 14 septembre 2026", "groupes": ["Direction"] },
+    { "fichier": "07-note-cafeteria.pdf", "titre": "Note de service : travaux du restaurant d'entreprise", "groupes": ["Tous"] },
+    { "fichier": "08-notes-de-frais.pdf", "titre": "Procédure de notes de frais", "groupes": ["Tous"] },
+    { "fichier": "09-plan-formation.pdf", "titre": "Plan de formation 2026", "groupes": ["RH"] },
+    { "fichier": "10-cloture-comptable.pdf", "titre": "Procédure de clôture comptable mensuelle", "groupes": ["Finance"] }
+  ]
+}

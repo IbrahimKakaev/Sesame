@@ -1,0 +1,20 @@
+# Charte informatique
+Diffusion : tous les salariés
+
+Cette charte fixe les règles d'usage du système d'information d'Hélianthe Ingénierie. Elle s'applique à tous les salariés, stagiaires et prestataires.
+
+Mots de passe. Un mot de passe compte au moins 14 caractères. Il est propre à chaque service et conservé dans le gestionnaire de mots de passe fourni par l'entreprise. Il n'est jamais communiqué, y compris au support informatique. La double authentification est obligatoire pour la messagerie, le VPN et les dépôts de code.
+
+Poste de travail. La session se verrouille automatiquement après 5 minutes d'inactivité. Verrouillez-la vous-même dès que vous quittez votre bureau. Le disque de chaque ordinateur portable est chiffré. Les mises à jour de sécurité sont installées dans les 7 jours qui suivent leur publication.
+
+Supports amovibles. Les clés USB personnelles sont interdites. Des clés chiffrées peuvent être empruntées au support pour un besoin ponctuel.
+=== page ===
+Données des clients. Le code source et les documents des clients ne sortent pas des environnements prévus pour eux. Ils ne sont copiés ni sur une messagerie personnelle ni sur un service de stockage en ligne non validé.
+
+Outils d'intelligence artificielle. Aucune donnée de client et aucune donnée personnelle ne doit être saisie dans un assistant d'IA grand public. Seuls les outils référencés par la direction technique peuvent être utilisés avec du code de l'entreprise.
+
+Incident de sécurité. Tout incident, même douteux, se signale dans l'heure à l'adresse securite@helianthe.example ou au poste 4040 : perte d'un ordinateur ou d'un téléphone, message suspect ouvert, mot de passe divulgué. Un signalement rapide n'est jamais reproché.
+
+Usage personnel. Un usage personnel raisonnable de la messagerie et d'Internet est toléré, tant qu'il ne gêne ni le travail ni la sécurité du réseau.
+
+Départ de l'entreprise. Les accès sont fermés le dernier jour travaillé. Le matériel est rendu au support informatique.

@@ -1,0 +1,20 @@
+# Procédure de clôture comptable mensuelle
+Diffusion : service Finance
+
+Cette procédure décrit les étapes de la clôture mensuelle des comptes, sous la responsabilité de la cheffe comptable.
+
+Calendrier. La clôture est terminée le cinquième jour ouvré du mois suivant. Le reporting mensuel est transmis à la direction générale le huitième jour ouvré.
+
+Factures clients. Les factures du mois sont émises au plus tard le dernier jour ouvré. Les temps passés par les équipes doivent être saisis et validés par les chefs de projet avant le deuxième jour ouvré du mois suivant.
+
+Factures fournisseurs. Toute facture est rapprochée de son bon de commande avant d'être comptabilisée. Au-dessus de 5 000 euros, la facture est validée par deux personnes : le demandeur et le directeur financier.
+=== page ===
+Paiements. Les fournisseurs sont payés à 45 jours fin de mois. Deux campagnes de virements ont lieu chaque mois, le 10 et le 25. Tout changement de coordonnées bancaires d'un fournisseur est vérifié par un rappel téléphonique au numéro déjà connu.
+
+Rapprochements. Le rapprochement bancaire est fait chaque semaine et finalisé à la clôture. Les comptes de tiers sont lettrés chaque mois.
+
+Provisions. Les factures non parvenues, les congés payés et les primes sont provisionnés chaque mois. Les travaux en cours sont évalués avec les chefs de projet.
+
+Relance des clients. Une facture impayée est relancée à 8 jours, puis à 30 jours après son échéance. Au-delà de 60 jours, le dossier est transmis à la direction commerciale.
+
+Archivage. Les pièces comptables sont numérisées et conservées dix ans.
