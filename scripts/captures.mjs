@@ -63,7 +63,8 @@ await page.getByRole('tab', { name: 'Droits des documents' }).click();
 await page.locator('tbody tr').first().waitFor();
 await capturer('administration-droits');
 await page.getByRole('tab', { name: /Journal/ }).click();
-await page.locator('tbody tr').first().waitFor();
+// La première ligne affichée est « Journal vide » tant que les entrées ne sont pas chargées
+await page.locator('tbody code').first().waitFor();
 await capturer('journal');
 
 await navigateur.close();
