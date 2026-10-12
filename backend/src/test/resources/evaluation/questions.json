@@ -1,0 +1,34 @@
+{
+  "questions": [
+    { "question": "Combien de jours de télétravail par semaine sont autorisés ?", "document": "Politique de télétravail" },
+    { "question": "Quel est le montant de l'indemnité de télétravail ?", "document": "Politique de télétravail" },
+    { "question": "Quel est le salaire d'un développeur senior ?", "document": "Grille salariale 2026" },
+    { "question": "Combien gagne un stagiaire de fin d'études ?", "document": "Grille salariale 2026" },
+    { "question": "Quelle est l'enveloppe d'augmentation prévue cette année ?", "document": "Grille salariale 2026" },
+    { "question": "Quel chiffre d'affaires est prévu pour 2027 ?", "document": "Budget prévisionnel 2027" },
+    { "question": "Combien coûte le nouveau banc de test ?", "document": "Budget prévisionnel 2027" },
+    { "question": "Quelle entreprise Hélianthe envisage-t-elle de racheter ?", "document": "Compte rendu du comité de direction du 14 septembre 2026" },
+    { "question": "Quand ouvrira l'agence de Bordeaux ?", "document": "Compte rendu du comité de direction du 14 septembre 2026" },
+    { "question": "Pourquoi les embauches sont-elles gelées ?", "document": "Compte rendu du comité de direction du 14 septembre 2026" },
+    { "question": "Quelle est la longueur minimale d'un mot de passe ?", "document": "Charte informatique" },
+    { "question": "À qui signaler la perte de mon ordinateur portable ?", "document": "Charte informatique" },
+    { "question": "Ai-je le droit d'utiliser une clé USB personnelle ?", "document": "Charte informatique" },
+    { "question": "Quels sont les horaires du restaurant d'entreprise ?", "document": "Guide d'accueil des nouveaux salariés" },
+    { "question": "Combien de jours de congés payés ai-je par an ?", "document": "Guide d'accueil des nouveaux salariés" },
+    { "question": "Quelle part de la mutuelle est payée par l'employeur ?", "document": "Guide d'accueil des nouveaux salariés" },
+    { "question": "Jusqu'à quel montant un repas en déplacement est-il remboursé ?", "document": "Procédure de notes de frais" },
+    { "question": "Avant quelle date faut-il déposer sa note de frais ?", "document": "Procédure de notes de frais" },
+    { "question": "Combien coûte au maximum une nuit d'hôtel remboursée à Paris ?", "document": "Procédure de notes de frais" },
+    { "question": "De quel budget individuel de formation dispose chaque salarié ?", "document": "Plan de formation 2026" },
+    { "question": "Quelles sont les formations prioritaires cette année ?", "document": "Plan de formation 2026" },
+    { "question": "Dans quel délai les fournisseurs sont-ils payés ?", "document": "Procédure de clôture comptable mensuelle" },
+    { "question": "Qui doit valider une facture de plus de 5 000 euros ?", "document": "Procédure de clôture comptable mensuelle" },
+    { "question": "Quand le restaurant d'entreprise rouvrira-t-il après les travaux ?", "document": "Note de service : travaux du restaurant d'entreprise" }
+  ],
+  "horsSujet": [
+    "Quelle est la capitale de l'Australie ?",
+    "Donne-moi une recette de tarte aux pommes.",
+    "Qui a gagné la Coupe du monde de football en 2018 ?",
+    "Comment fonctionne un moteur à explosion ?"
+  ]
+}
