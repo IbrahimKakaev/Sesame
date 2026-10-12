@@ -1,0 +1,79 @@
+name: sesame
+
+# Démarrage en une commande : docker compose up --build, puis http://localhost:4200
+# Aucun secret n'est écrit dans le dépôt : le service « secrets » tire au hasard le mot
+# de passe de la base et la clé de signature des jetons au premier démarrage, et les
+# garde dans un volume lu par PostgreSQL et par le backend.
+
+services:
+  secrets:
+    image: busybox:1.37
+    volumes:
+      - secrets:/secrets
+    command:
+      - sh
+      - -c
+      - |
+        cd /secrets
+        for nom in spring.datasource.password sesame.securite.jwt-secret; do
+          [ -s "$$nom" ] || printf %s "$$(head -c 48 /dev/urandom | base64 | tr -d '\n/+=')" > "$$nom"
+        done
+        chmod 444 *
+
+  postgres:
+    # PostgreSQL 16 avec l'extension pgvector
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: sesame
+      POSTGRES_PASSWORD_FILE: /run/sesame-secrets/spring.datasource.password
+      POSTGRES_DB: sesame
+    volumes:
+      - postgres_donnees:/var/lib/postgresql/data
+      - secrets:/run/sesame-secrets:ro
+    depends_on:
+      secrets:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sesame -d sesame"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      SESAME_DB_URL: jdbc:postgresql://postgres:5432/sesame
+      SESAME_DB_UTILISATEUR: sesame
+      # Entreprise fictive chargée au premier démarrage ; « false » pour une base vide
+      SESAME_DEMO: ${SESAME_DEMO:-true}
+      # Sans HTTPS en local, le cookie de session ne peut pas exiger une connexion chiffrée
+      SESAME_COOKIE_SECURISE: ${SESAME_COOKIE_SECURISE:-false}
+      SESAME_ADMIN_EMAIL: ${SESAME_ADMIN_EMAIL:-}
+      SESAME_ADMIN_MOT_DE_PASSE: ${SESAME_ADMIN_MOT_DE_PASSE:-}
+      # Sans clé, tout fonctionne sauf la rédaction des réponses
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    volumes:
+      - secrets:/run/sesame-secrets:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/localhost/8080'"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  frontend:
+    build: frontend
+    ports:
+      # Seul point d'entrée : l'application sur http://localhost:4200, l'API derrière /api
+      - "127.0.0.1:${SESAME_PORT:-4200}:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_donnees:
+  secrets:
