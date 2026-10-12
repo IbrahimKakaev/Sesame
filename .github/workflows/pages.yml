@@ -1,0 +1,90 @@
+name: Démo et badges
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  SITE: frontend/dist/frontend/browser
+  SESAME_MODELE_OBLIGATOIRE: "true"
+
+jobs:
+  deploy:
+    name: Publier la démo et les badges
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - uses: actions/cache@v4
+        with:
+          path: backend/modeles
+          key: modele-${{ hashFiles('scripts/telecharger-modele.sh') }}
+      - run: npm ci
+        working-directory: frontend
+
+      # Hébergée sur GitHub Pages, l'application passe d'elle-même en mode démo.
+      - name: Build de la démo
+        working-directory: frontend
+        run: npm run build -- --base-href "/${{ github.event.repository.name }}/"
+
+      # Les badges du README lisent ces résultats, publiés avec la démo.
+      - name: Tests Java avec couverture et évaluation de la recherche
+        run: scripts/telecharger-modele.sh && cd backend && mvn -B verify
+      - name: Tests Angular avec couverture
+        working-directory: frontend
+        run: npm run couverture 2>&1 | tee ../angular-tests.log
+      - name: Audit des dépendances
+        run: |
+          (cd frontend && npm audit --omit=dev --json > ../audit-npm.json) || true
+          mkdir -p backend/target/audit && cp backend/target/sesame-*.jar backend/target/audit/
+          docker run --rm -v "$PWD/backend/target/audit:/src:ro" aquasec/trivy:latest \
+            rootfs --quiet --scanners vuln --format json /src > audit-java.json
+      # Servie depuis localhost, la démo ne s'active qu'avec ?demo dans l'adresse.
+      - name: Lighthouse sur la démo
+        run: |
+          node .github/scripts/servir.mjs "$SITE" "/${{ github.event.repository.name }}" 4173 &
+          npx --yes lighthouse@12 "http://localhost:4173/${{ github.event.repository.name }}/?demo" \
+            --output=json --output=html --output-path=./lighthouse \
+            --chrome-flags="--headless=new --no-sandbox" --quiet
+      - name: Générer les badges
+        run: node .github/scripts/badges.mjs "$SITE"
+
+      - name: Joindre les rapports au site
+        run: |
+          mkdir -p "$SITE/rapports"
+          cp -r backend/target/site/jacoco "$SITE/rapports/couverture-java"
+          cp -r frontend/coverage/frontend "$SITE/rapports/couverture-angular"
+          cp backend/target/evaluation-recherche.json "$SITE/rapports/evaluation-recherche.json"
+          cp lighthouse.report.html "$SITE/rapports/lighthouse.html"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.SITE }}
+      - id: deployment
+        uses: actions/deploy-pages@v4

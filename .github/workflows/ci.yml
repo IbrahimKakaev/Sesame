@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  backend:
+    name: Tests Java (étanchéité, fuites, intégration PostgreSQL)
+    runs-on: ubuntu-latest
+    env:
+      # Sans le modèle d'embeddings, les tests qui en dépendent échouent au lieu d'être ignorés
+      SESAME_MODELE_OBLIGATOIRE: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      # Le modèle (118 Mo) est gardé d'un run à l'autre ; le script revérifie sa somme de contrôle.
+      - uses: actions/cache@v4
+        with:
+          path: backend/modeles
+          key: modele-${{ hashFiles('scripts/telecharger-modele.sh') }}
+      - name: Modèle d'embeddings
+        run: scripts/telecharger-modele.sh
+      # Testcontainers lance PostgreSQL + pgvector dans le Docker du runner.
+      - name: Tests et build
+        working-directory: backend
+        run: mvn -B verify
+
+  frontend:
+    name: Tests Angular et build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      # Les données du mode démo doivent correspondre aux sources des PDF de démonstration.
+      - name: Données de démo à jour
+        run: npm run demo:donnees && git diff --exit-code -- src/app/demo/demo-donnees.json
+      - name: Tests (composants, services, mode démo)
+        run: npm test
+      - name: Build
+        run: npm run build
+
+  audit:
+    name: Audit des dépendances
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      # Échoue dès qu'une dépendance embarquée en production a une faille élevée ou critique.
+      - name: Dépendances npm
+        working-directory: frontend
+        run: npm audit --omit=dev --audit-level=high
+      - name: Jar du backend
+        working-directory: backend
+        run: mvn -B -q -DskipTests package && mkdir -p target/audit && cp target/sesame-*.jar target/audit/
+      # Trivy lit les bibliothèques réellement embarquées dans le jar. Les exceptions
+      # sont listées et justifiées dans .trivyignore.
+      - name: Dépendances Java
+        run: |
+          docker run --rm -v "$PWD/backend/target/audit:/src:ro" -v "$PWD/.trivyignore:/.trivyignore:ro" \
+            aquasec/trivy:latest rootfs --scanners vuln --severity CRITICAL --ignore-unfixed \
+            --ignorefile /.trivyignore --exit-code 1 /src
+
+  docker:
+    name: Images Docker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose build

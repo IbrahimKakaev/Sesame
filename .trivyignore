@@ -1,0 +1,12 @@
+# Exceptions à l'audit des dépendances Java (voir .github/workflows/ci.yml).
+# Chaque ligne est justifiée ; une exception sans justification ne doit pas être ajoutée.
+# Les deux failles ci-dessous touchent Spring Framework 6.2, dernière branche compatible
+# avec Spring Boot 3 : leur correctif libre n'existe qu'en Spring Framework 7 (Spring Boot 4).
+
+# Exécution de code par XsltView quand une route « /** » rend une vue sans nom explicite.
+# Sésame est une API REST : aucune vue n'est rendue et XsltView n'est pas configuré.
+CVE-2026-47884
+
+# Corruption d'un flux SSE construit avec des fragments de vue.
+# Le flux de réponse de Sésame est écrit à la main (ControleurQuestions), sans fragment de vue.
+CVE-2026-47890
