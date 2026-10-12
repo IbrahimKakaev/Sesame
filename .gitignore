@@ -1,0 +1,26 @@
+# Secrets locaux
+.env
+.env.local
+
+# Backend
+backend/target/
+
+# Frontend
+node_modules/
+dist/
+.angular/
+coverage/
+
+*.log
+.DS_Store
+.idea/
+.vscode/
+
+# Modèle d'embeddings, téléchargé par scripts/telecharger-modele.sh
+backend/modeles/
+
+# Résultats intermédiaires de la CI (voir .github/workflows/pages.yml)
+angular-tests.log
+audit-npm.json
+audit-java.json
+lighthouse.report.*
