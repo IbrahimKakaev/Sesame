@@ -224,19 +224,24 @@ TypeScript), l'**audit des dépendances** (npm audit, et Trivy sur le jar),
 les documents de démonstration. Une source est « retrouvée » quand le document
 attendu figure parmi les 5 passages transmis au LLM.
 
-| Mode | Sources retrouvées | Bonne source en première position |
+| Mode | Machine ARM (développement) | Machine x86 (CI) |
 | --- | --- | --- |
-| Vecteurs seuls | 23 / 24 (96 %) | 21 / 24 |
-| Hybride : vecteurs + plein texte français, fusion par rangs | 24 / 24 (100 %) | 19 / 24 |
+| Vecteurs seuls | 23 / 24, dont 21 en première position | 24 / 24, dont 21 en première position |
+| Hybride : vecteurs + plein texte français, fusion par rangs | 24 / 24, dont 20 en première position | voir le [rapport publié](https://ibrahimkakaev.github.io/Sesame/rapports/evaluation-recherche.json) |
 
-La recherche hybride est gardée : elle rattrape la question que les vecteurs
-manquent (un terme exact, « enveloppe d'augmentation ») et c'est la présence de
-la source parmi les passages transmis qui compte pour la réponse. Son coût reste
-faible : une colonne générée, un index et une étape de fusion, les deux branches
-lisant la même étape `autorises`. Le gain est toutefois mince sur ce petit corpus,
-et la branche lexicale dégrade un peu le classement de tête. Ces chiffres ont été
-mesurés sur une machine ARM ; le modèle étant quantifié, ils peuvent varier
-légèrement d'un processeur à l'autre.
+**Verdict : sur ce corpus, la recherche hybride n'apporte pas de gain mesurable.**
+Les deux modes retrouvent 23 ou 24 sources sur 24, et l'écart d'une question
+change de sens selon le processeur (le modèle d'embeddings est quantifié, ses
+résultats varient légèrement d'une machine à l'autre). La branche lexicale
+dégrade par ailleurs un peu le classement de tête.
+
+Elle reste activée par défaut pour deux raisons : son coût est faible (une
+colonne générée, un index et une étape de fusion, les deux branches lisant la
+même étape `autorises`, donc un seul point de filtrage), et elle est censée
+aider sur les termes exacts (sigles, références, noms propres) qu'un petit
+modèle d'embeddings représente mal, cas que dix documents rédigés en phrases
+complètes exercent peu. `sesame.recherche.mode: vecteurs` la désactive. Sur un
+vrai corpus, c'est cette évaluation qu'il faudrait refaire avant de trancher.
 
 ## Récupérer le projet
 

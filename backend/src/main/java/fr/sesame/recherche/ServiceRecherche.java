@@ -58,10 +58,11 @@ public class ServiceRecherche {
                 SELECT NULLIF(replace(plainto_tsquery('french', :question)::text, '&', '|'), '')::tsquery AS mots
             ),
             lexicale AS (
-                SELECT a.id, row_number() OVER (ORDER BY ts_rank_cd(a.recherche, r.mots) DESC, a.id) AS rang
+                SELECT a.id, row_number() OVER (
+                           ORDER BY ts_rank_cd(a.recherche, r.mots) DESC, a.embedding <=> CAST(:vecteur AS vector), a.id) AS rang
                 FROM autorises a, requete r
                 WHERE :hybride AND a.recherche @@ r.mots
-                ORDER BY ts_rank_cd(a.recherche, r.mots) DESC, a.id
+                ORDER BY ts_rank_cd(a.recherche, r.mots) DESC, a.embedding <=> CAST(:vecteur AS vector), a.id
                 LIMIT :candidats
             )
             SELECT a.id, a.document_id, a.titre, a.page, a.contenu,
@@ -71,7 +72,9 @@ public class ServiceRecherche {
             LEFT JOIN semantique s ON s.id = a.id
             LEFT JOIN lexicale l ON l.id = a.id
             WHERE s.id IS NOT NULL OR l.id IS NOT NULL
-            ORDER BY score DESC, a.id
+            -- À score égal (fréquent : les scores ne dépendent que des rangs), le passage le plus
+            -- proche de la question passe devant. L'identifiant, tiré au hasard, ne départage qu'en dernier.
+            ORDER BY score DESC, a.embedding <=> CAST(:vecteur AS vector), a.id
             LIMIT :limite
             """;
 
