@@ -1,0 +1,85 @@
+spring:
+  application:
+    name: sesame
+  config:
+    # Secrets fournis sous forme de fichiers (Docker Compose) : un fichier par propriété
+    import: optional:configtree:${SESAME_SECRETS:/run/sesame-secrets}/
+  datasource:
+    url: ${SESAME_DB_URL:jdbc:postgresql://localhost:5432/sesame}
+    username: ${SESAME_DB_UTILISATEUR:sesame}
+    password: ${SESAME_DB_MOT_DE_PASSE:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      # Le schéma appartient à Flyway : Hibernate se contente de le vérifier
+      ddl-auto: validate
+  flyway:
+    locations: classpath:db/migration
+  servlet:
+    multipart:
+      # Première barrière sur la taille des dépôts ; ServiceDepot revérifie
+      max-file-size: 10MB
+      max-request-size: 11MB
+
+server:
+  port: ${SESAME_PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+sesame:
+  securite:
+    # Aucune valeur par défaut : l'application refuse de démarrer sans secret
+    jwt-secret: ${SESAME_JWT_SECRET:}
+    duree-jeton-acces: 10m
+    duree-renouvellement: 7d
+    cookie-securise: ${SESAME_COOKIE_SECURISE:true}
+    cout-bcrypt: 12
+    connexion:
+      tentatives-max: 5
+      tentatives-max-par-adresse: 20
+      fenetre: 15m
+  documents:
+    taille-max: 10MB
+    pages-max: 300
+    caracteres-max: 2000000
+    taille-passage: 800
+    recouvrement-passage: 120
+  recherche:
+    # « hybride » : vecteurs + plein texte français ; « vecteurs » : vecteurs seuls
+    mode: hybride
+    # Passages candidats retenus par chaque branche avant la fusion
+    candidats: 20
+    # En dessous de cette similarité, aucun passage n'est jugé pertinent pour répondre
+    seuil-de-production: 0.80
+    seuil-similarite: ${sesame.recherche.seuil-de-production}
+  llm:
+    # Sans clé, la recherche fonctionne mais les réponses ne sont pas rédigées
+    cle-api: ${ANTHROPIC_API_KEY:}
+    modele: claude-haiku-5-5
+    # Vide : adresse officielle de l'API. Les tests y branchent un faux serveur.
+    url-de-base: ${ANTHROPIC_BASE_URL:}
+    tokens-max: 4096
+    tentatives: 2
+    # Nombre de passages transmis au modèle pour une question
+    passages: 5
+  questions:
+    # Questions et recherches autorisées par compte et par minute
+    par-minute: 20
+  embeddings:
+    # « onnx » : modèle multilingual-e5-small exécuté dans la JVM
+    moteur: onnx
+    dossier-modele: ${SESAME_MODELE:modeles/multilingual-e5-small}
+  demo:
+    # Charge l'entreprise fictive au premier démarrage. Jamais avec de vrais documents.
+    charger: ${SESAME_DEMO:false}
+  # Premier administrateur, créé au démarrage s'il n'existe pas encore
+  admin-initial:
+    email: ${SESAME_ADMIN_EMAIL:}
+    mot-de-passe: ${SESAME_ADMIN_MOT_DE_PASSE:}
