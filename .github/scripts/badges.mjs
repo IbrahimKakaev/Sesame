@@ -117,8 +117,6 @@ const categories = json('lighthouse.report.json').categories;
 for (const [nom, label, categorie] of [
   ['lighthouse-performance', 'performance', 'performance'],
   ['lighthouse-accessibilite', 'accessibilité', 'accessibility'],
-  ['lighthouse-bonnes-pratiques', 'bonnes pratiques', 'best-practices'],
-  ['lighthouse-seo', 'SEO', 'seo'],
 ]) {
   const note = Math.round(categories[categorie].score * 100);
   if (!Number.isFinite(note)) throw new Error(`Note Lighthouse illisible pour ${label}`);

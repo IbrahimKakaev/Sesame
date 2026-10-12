@@ -13,17 +13,12 @@
 [![npm audit](https://img.shields.io/endpoint?url=https%3A%2F%2Fibrahimkakaev.github.io%2FSesame%2Fbadges%2Faudit-npm.json)](https://github.com/IbrahimKakaev/Sesame/actions/workflows/ci.yml)
 [![Lighthouse accessibilité](https://img.shields.io/endpoint?url=https%3A%2F%2Fibrahimkakaev.github.io%2FSesame%2Fbadges%2Flighthouse-accessibilite.json)](https://ibrahimkakaev.github.io/Sesame/rapports/lighthouse.html)
 [![Lighthouse performance](https://img.shields.io/endpoint?url=https%3A%2F%2Fibrahimkakaev.github.io%2FSesame%2Fbadges%2Flighthouse-performance.json)](https://ibrahimkakaev.github.io/Sesame/rapports/lighthouse.html)
-[![Lighthouse bonnes pratiques](https://img.shields.io/endpoint?url=https%3A%2F%2Fibrahimkakaev.github.io%2FSesame%2Fbadges%2Flighthouse-bonnes-pratiques.json)](https://ibrahimkakaev.github.io/Sesame/rapports/lighthouse.html)
-[![Lighthouse SEO](https://img.shields.io/endpoint?url=https%3A%2F%2Fibrahimkakaev.github.io%2FSesame%2Fbadges%2Flighthouse-seo.json)](https://ibrahimkakaev.github.io/Sesame/rapports/lighthouse.html)
 
 [![Java](https://img.shields.io/badge/Java-21-e76f00?logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-6db33f?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Angular](https://img.shields.io/badge/Angular-22-dd0031?logo=angular&logoColor=white)](https://angular.dev/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16%20%2B%20pgvector-4169e1?logo=postgresql&logoColor=white)](https://github.com/pgvector/pgvector)
-[![Claude](https://img.shields.io/badge/LLM-Claude%20Haiku%205.5-d97757)](https://platform.claude.com/docs)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ed?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
-[![Testcontainers](https://img.shields.io/badge/Testcontainers-1.21-291a3f)](https://testcontainers.com/)
-[![Dernier commit](https://img.shields.io/github/last-commit/IbrahimKakaev/Sesame?label=dernier%20commit)](https://github.com/IbrahimKakaev/Sesame/commits/main)
 
 Moteur de recherche documentaire d'entreprise : on pose une question en français
 sur des PDF, un LLM répond en citant ses sources, et **aucune réponse ne s'appuie
